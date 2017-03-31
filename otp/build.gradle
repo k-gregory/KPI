@@ -1,26 +1,23 @@
 apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'antlr'
 
 repositories {
     jcenter()
 }
 
 dependencies {
-    compile 'com.google.guava:guava:20.0'
+    antlr 'org.antlr:antlr4:4.6'
     compile 'commons-io:commons-io:2.5'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+}
+
+generateGrammarSource{
+    arguments+=['-visitor']
 }
 
 test{
     testLogging{
       exceptionFormat "full"
-//      events "passed", "skipped", "failed", "standardOut", "standardError"
     }
 }
-
-/*
-task execute(type: JavaExec){
-  main = mainClass
-  classpath = sourceSets.main.runtimeClasspath
-}
-*/
