@@ -1,0 +1,15 @@
+group 'io.bitbucket.gregoryk1'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "io.codearte.jfairy:jfairy:0.5.5"
+}

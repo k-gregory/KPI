@@ -4,7 +4,9 @@ grammar Matrix;
 package io.github.atommed.otp.lab2;
 }
 
-defProg: (statement ';')+;
+defProg: statement | (statement ';')+ statement?;
+//defProg: statement (';' statement)+ ';'?;
+//defProg: (statement ';')* statement?;
 
 statement: assign | expr;
 
