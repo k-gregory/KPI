@@ -5,12 +5,12 @@ import java.time.temporal.ChronoUnit;
 
 public class SubwayClient {
     private int tokensLeft = 0;
-    private PaymentChecker tokensChecker = new TokenPayment(this);
-    private PaymentChecker monthSubscription;
-    private PaymentChecker passesSubscription;
+    private PaymentMethod tokensChecker = new TokenPayment(this);
+    private PaymentMethod monthSubscription;
+    private PaymentMethod passesSubscription;
     private String name;
 
-    private static PaymentChecker noPaymentResult = () -> {
+    private static PaymentMethod noPaymentResult = () -> {
         System.out.println("Tried to pass without payment");
         return false;
     };
@@ -35,19 +35,19 @@ public class SubwayClient {
         this.passesSubscription = new PassesSubscription(count);
     }
 
-    public PaymentChecker tokenPayment() {
+    public PaymentMethod tokenPayment() {
         return tokensChecker;
     }
 
-    public PaymentChecker passSubscriptionPayment() {
+    public PaymentMethod passSubscriptionPayment() {
         return passesSubscription != null? passesSubscription : noPaymentResult;
     }
 
-    public PaymentChecker monthSubscriptionPayment() {
+    public PaymentMethod monthSubscriptionPayment() {
         return monthSubscription != null ? monthSubscription : noPaymentResult;
     }
 
-    public void setMonthSubscription(PaymentChecker monthSubscription) {
+    public void setMonthSubscription(PaymentMethod monthSubscription) {
         this.monthSubscription = monthSubscription;
     }
 
@@ -55,7 +55,7 @@ public class SubwayClient {
         return name;
     }
 
-    private static class TokenPayment implements PaymentChecker{
+    private static class TokenPayment implements PaymentMethod {
         private SubwayClient client;
 
         private TokenPayment(SubwayClient client) {
@@ -74,7 +74,7 @@ public class SubwayClient {
             }
         }
     }
-    private static class MonthSubscription implements PaymentChecker{
+    private static class MonthSubscription implements PaymentMethod {
         private LocalDate acquired;
 
         private MonthSubscription(LocalDate acquired) {
@@ -92,7 +92,7 @@ public class SubwayClient {
             }
         }
     }
-    private static class PassesSubscription implements PaymentChecker{
+    private static class PassesSubscription implements PaymentMethod {
         private int passesLeft;
         public PassesSubscription(int passesLeft) {
             if(passesLeft < 1) throw new IllegalArgumentException("passesLeft must be positive");
