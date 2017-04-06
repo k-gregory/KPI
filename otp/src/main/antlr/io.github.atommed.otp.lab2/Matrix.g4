@@ -23,7 +23,9 @@ expr:
     | '|' expr '|' #Module
     | '(' expr ')' #Group;
 
-literal: vector | NUMBER;
+literal:
+ vector #VectorLiteral
+ | NUMBER #NumLiteral;
 //funcall: ID '(' expr (',' expr)* ')';
 assign: ID '=' expr;
 
