@@ -15,9 +15,9 @@ expr:
     expr '^t' #Transpose
     | expr '^1' #Inverse
     | '-' expr #Negate
-    | expr op=(DIVIDE | MULTIPLY | VECMULT) expr #MulDiv
+    | expr op=(DIVIDE | MULTIPLY | VECMULT | MATMULT) expr #MulDiv
     | expr op=(PLUS | MINUS) expr #AddSub
-    | ID '(' expr (',' expr)* ')' #Funcall
+    | ID '(' expr ')' #Funcall
     | literal #LiteralValue
     | ID #Variable
     | '|' expr '|' #Module
@@ -34,6 +34,7 @@ vector: '[' expr (',' expr)* ']';
 DIVIDE: '/';
 MULTIPLY: '*';
 VECMULT: 'x';
+MATMULT: '.';
 PLUS: '+';
 MINUS: '-';
 

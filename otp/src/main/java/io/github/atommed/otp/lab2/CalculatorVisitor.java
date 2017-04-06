@@ -1,18 +1,49 @@
 package io.github.atommed.otp.lab2;
 
 import io.github.atommed.otp.lab2.datatypes.MathVal;
+import io.github.atommed.otp.lab2.datatypes.MathValOperation;
 import io.github.atommed.otp.lab2.datatypes.NumVal;
 import io.github.atommed.otp.lab2.datatypes.VectorVal;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Created by grego on 31.03.2017.
  */
 class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
-    private Map<String, MathVal> memory = new HashMap<>();
+    private static final Map<String, MathValOperation> operators;
+    static {
+        operators = new HashMap<>();
+        operators.put("det", mv->new NumVal(((VectorVal) mv).toMatrix().det()));
+        operators.put("rank", mv->new NumVal((double)((VectorVal)mv).toMatrix().rank()));
+    }
+
+    private final Map<String, MathVal> memory;
+    public CalculatorVisitor(Map<String, MathVal> memory){
+        this.memory = memory;
+    }
+
+    public CalculatorVisitor(){
+        this(new HashMap<>());
+    }
+
+    @Override
+    public MathVal visitInverse(MatrixParser.InverseContext ctx) {
+        return visit(ctx.expr()).inverse();
+    }
+
+    @Override
+    public MathVal visitModule(MatrixParser.ModuleContext ctx) {
+        return visit(ctx.expr()).absolute();
+    }
+
+    @Override
+    public MathVal visitTranspose(MatrixParser.TransposeContext ctx) {
+        return visit(ctx.expr()).transpose();
+    }
 
     @Override
     public MathVal visitDefProg(MatrixParser.DefProgContext ctx) {
@@ -28,20 +59,26 @@ class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
         MathVal right = visit(ctx.expr(1));
         if (ctx.op.getType() == MatrixParser.MULTIPLY)
             return left.mul(right);
-        else
+        else if(ctx.op.getType() == MatrixParser.DIVIDE)
             return left.div(right);
+        else if(ctx.op.getType() == MatrixParser.VECMULT)
+            return left.vMul(right);
+        else if(ctx.op.getType() == MatrixParser.MATMULT)
+            return left.matMul(right);
+        else throw new UnsupportedOperationException();
     }
 
     @Override
     public MathVal visitAddSub(MatrixParser.AddSubContext ctx) {
         MathVal left = visit(ctx.expr(0));
         MathVal right = visit(ctx.expr(1));
-        if (ctx.op.getType() == MatrixParser.PLUS)
+        if (ctx.op.getType() == MatrixParser.PLUS) {
             return left.plus(right);
-        else
+        }
+        else {
             return left.minus(right);
+        }
     }
-
 
     @Override
     public MathVal visitAssign(MatrixParser.AssignContext ctx) {
@@ -51,8 +88,21 @@ class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
     }
 
     @Override
+    public MathVal visitNegate(MatrixParser.NegateContext ctx) {
+        return visit(ctx.expr()).negate();
+    }
+
+    @Override
     public MathVal visitNumLiteral(MatrixParser.NumLiteralContext ctx) {
         return new NumVal(Double.valueOf(ctx.NUMBER().getText()));
+    }
+
+    @Override
+    public MathVal visitFuncall(MatrixParser.FuncallContext ctx) {
+        String funcName = ctx.ID().getText();
+        MathValOperation mathValOperation = operators.get(funcName);
+        if(mathValOperation == null) throw new UnsupportedOperationException("Not found op "+funcName);
+        return mathValOperation.perform(visit(ctx.expr()));
     }
 
     @Override
@@ -61,12 +111,12 @@ class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
     }
 
     @Override
-    public MathVal visitStatement(MatrixParser.StatementContext ctx) {
-        return super.visitStatement(ctx);
+    public MathVal visitGroup(MatrixParser.GroupContext ctx) {
+        return visit(ctx.expr());
     }
 
     @Override
-    public MathVal visitGroup(MatrixParser.GroupContext ctx) {
-        return visit(ctx.expr());
+    public MathVal visitVectorLiteral(MatrixParser.VectorLiteralContext ctx) {
+        return new VectorVal(ctx.vector().expr().stream().map(this::visit).toArray(MathVal[]::new));
     }
 }

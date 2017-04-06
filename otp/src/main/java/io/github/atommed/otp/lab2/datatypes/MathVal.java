@@ -4,9 +4,40 @@ import io.github.atommed.otp.lab2.MathValVisitor;
 
 public abstract class MathVal{
     public abstract MathVal accept(MathValVisitor v);
-    public MathVal mul(MathVal other){return new NumVal(42.d);}
-    public MathVal div(MathVal other){return new NumVal(10.d);}
 
-    public abstract MathVal plus(MathVal right);
-    public abstract MathVal minus(MathVal right);
+    public MathVal mul(MathVal right) {
+        throw new UnsupportedOperationException();
+    }
+
+    public MathVal plus(MathVal right) {
+        throw new UnsupportedOperationException();
+    }
+
+    public MathVal vMul(MathVal right) {
+        throw new UnsupportedOperationException();
+    }
+
+    public MathVal transpose() {
+        throw new UnsupportedOperationException();
+    }
+
+    public MathVal inverse() {
+        throw new UnsupportedOperationException();
+    }
+
+    public MathVal absolute(){throw  new UnsupportedOperationException();}
+
+    public MathVal matMul(MathVal other){throw new UnsupportedOperationException();}
+
+    public MathVal negate(){
+        return mul(new NumVal(-1.d));
+    }
+
+    public MathVal div(MathVal right) {
+        return mul(right.inverse());
+    }
+
+    public MathVal minus(MathVal right) {
+        return plus(right.negate());
+    }
 }

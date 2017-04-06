@@ -8,6 +8,7 @@ repositories {
 dependencies {
     antlr 'org.antlr:antlr4:4.6'
     compile 'commons-io:commons-io:2.5'
+    compile 'gov.nist.math:jama:1.0.3'
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
 }

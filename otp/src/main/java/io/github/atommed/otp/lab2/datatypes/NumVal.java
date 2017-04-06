@@ -3,7 +3,7 @@ package io.github.atommed.otp.lab2.datatypes;
 import io.github.atommed.otp.lab2.MathValVisitor;
 
 public class NumVal extends MathVal {
-    private final Double val;
+    final Double val;
     public NumVal(Double val){
 	this.val = val;
     }
@@ -15,40 +15,43 @@ public class NumVal extends MathVal {
 
     @Override
     public MathVal plus(MathVal right) {
+        final MathVal that = this;
         return right.accept(new MathValVisitor() {
             @Override
             public MathVal visit(NumVal num) {
-                return new NumVal(num.val+val);
+                return new NumVal(num.val + val);
+            }
+
+            @Override
+            public MathVal visit(VectorVal vector) {
+                return vector.plus(that);
             }
         });
     }
 
+
     @Override
-    public MathVal minus(MathVal right) {
-        return right.accept(new MathValVisitor() {
-            @Override
-            public MathVal visit(NumVal num) {
-                return new NumVal(val - num.val);
-            }
-        });
+    public MathVal inverse() {
+        return new NumVal(1.d/val);
+    }
+
+    @Override
+    public MathVal absolute() {
+        return new NumVal(Math.abs(val));
     }
 
     @Override
     public MathVal mul(MathVal other) {
+        MathVal that = this;
         return other.accept(new MathValVisitor() {
             @Override
             public MathVal visit(NumVal num) {
                 return new NumVal(num.val * val);
             }
-        });
-    }
 
-    @Override
-    public MathVal div(MathVal other) {
-        return other.accept(new MathValVisitor() {
             @Override
-            public MathVal visit(NumVal num) {
-                return new NumVal(val / num.val);
+            public MathVal visit(VectorVal vector) {
+                return vector.mul(that);
             }
         });
     }
@@ -65,6 +68,8 @@ public class NumVal extends MathVal {
 
         return val.equals(numVal.val);
     }
+
+
 
     @Override
     public int hashCode() {
