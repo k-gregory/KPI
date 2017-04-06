@@ -3,9 +3,19 @@ package io.bitbucket.gregoryk1.despat.lab2.task2;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+interface TokenPayer{
+    boolean tryPayToken();
+}
+interface MonthSubscriptionPayer{
+    boolean checkMonthSubscription();
+}
+interface PassSubscriptionPayer{
+    boolean tryUsePassSubscription();
+}
+
 public class SubwayClient {
     private int tokensLeft = 0;
-    private PaymentMethod tokensChecker = new TokenPayment(this);
+    private PaymentMethod tokensChecker = new TokenPaymentAdapter(this);
     private PaymentMethod monthSubscription;
     private PaymentMethod passesSubscription;
     private String name;
@@ -27,12 +37,12 @@ public class SubwayClient {
 
     public void buyMonthSubscription(LocalDate acquired){
         System.out.println(name + " buys month subscription");
-        this.monthSubscription = new MonthSubscription(acquired);
+        this.monthSubscription = new MonthSubscriptionAdapter(acquired);
     }
 
     public void buyPassesSubscription(int count){
         System.out.println(name + " buys subscription for " + count + " times");
-        this.passesSubscription = new PassesSubscription(count);
+        this.passesSubscription = new PassesSubscriptionAdapter(count);
     }
 
     public PaymentMethod tokenPayment() {
@@ -55,7 +65,7 @@ public class SubwayClient {
         return name;
     }
 
-    private static class TokenPayment implements PaymentMethod {
+    private static class TokenPayment implements TokenPayer{
         private SubwayClient client;
 
         private TokenPayment(SubwayClient client) {
@@ -63,7 +73,7 @@ public class SubwayClient {
         }
 
         @Override
-        public boolean tryPass() {
+        public boolean tryPayToken() {
             System.out.println("Payment by token requested");
             if(client.tokensLeft > 0){
                 client.tokensLeft--;
@@ -74,7 +84,17 @@ public class SubwayClient {
             }
         }
     }
-    private static class MonthSubscription implements PaymentMethod {
+
+    private static class TokenPaymentAdapter extends TokenPayment implements PaymentMethod{
+	public TokenPaymentAdapter(SubwayClient c){
+	    super(c);
+	}
+	@Override public boolean tryPass(){
+	    return tryPayToken();
+	}
+    }
+
+    private static class MonthSubscription implements MonthSubscriptionPayer{
         private LocalDate acquired;
 
         private MonthSubscription(LocalDate acquired) {
@@ -82,7 +102,7 @@ public class SubwayClient {
         }
 
         @Override
-        public boolean tryPass() {
+        public boolean checkMonthSubscription() {
             System.out.println("Trying to pay by month subscription");
             if(ChronoUnit.MONTHS.between(acquired, LocalDate.now()) < 1){
                 return true;
@@ -92,7 +112,15 @@ public class SubwayClient {
             }
         }
     }
-    private static class PassesSubscription implements PaymentMethod {
+
+    private static class MonthSubscriptionAdapter extends MonthSubscription implements PaymentMethod{
+	public MonthSubscriptionAdapter(LocalDate ack){
+	    super(ack);
+	}
+	@Override public boolean tryPass(){return checkMonthSubscription();}
+    }
+
+    private static class PassesSubscription implements PassSubscriptionPayer{
         private int passesLeft;
         public PassesSubscription(int passesLeft) {
             if(passesLeft < 1) throw new IllegalArgumentException("passesLeft must be positive");
@@ -100,7 +128,7 @@ public class SubwayClient {
         }
 
         @Override
-        public boolean tryPass() {
+        public boolean tryUsePassSubscription() {
             System.out.println("Payment by passes subscr. requested");
             if(passesLeft > 0) {
                 passesLeft--;
@@ -110,5 +138,11 @@ public class SubwayClient {
                 return false;
             }
         }
+    }
+    private static class PassesSubscriptionAdapter extends PassesSubscription implements PaymentMethod{
+	public PassesSubscriptionAdapter(int c){
+	    super(c);
+	}
+	@Override public boolean tryPass(){return tryUsePassSubscription();}
     }
 }

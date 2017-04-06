@@ -34,5 +34,6 @@ public class Lab2 {
         assertCalculate(4.d,"a=4");
         assertCalculate(5.d,"a=5;a;");
         assertCalculate(10.d, "a=3;b=7;c=a+b");
+        assertCalculate(32.d, "a=3;b=7;c=a+b;c/5+c*3");
     }
 }

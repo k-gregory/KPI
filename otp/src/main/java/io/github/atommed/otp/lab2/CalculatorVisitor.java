@@ -3,6 +3,52 @@ package io.github.atommed.otp.lab2;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+interface MathValVisitor{
+    void visit(NumVal num);
+    void visit(VectorVal vector);
+}
+
+abstract class MathVal{
+    abstract void accept(MathValVisitor v);
+}
+
+class NumVal extends MathVal{ 
+    private final Double val;
+    public NumVal(Double val){
+	this.val = val;
+    }
+
+    @Override
+    public void accept(MathValVisitor v){
+	v.visit(this);
+    }
+
+    @Override
+    public String toString(){return val.toString();}
+}
+
+class VectorVal extends MathVal{ 
+    private final MathVal[] elements;
+    public VectorVal(MathVal... elements){
+	this.elements = Arrays.copyOf(elements, elements.length);
+    }
+    @Override
+    public void accept(MathValVisitor v){
+	v.visit(this);
+    }
+
+    @Override
+    public String toString(){
+	return "["+Arrays
+	    .stream(elements)
+	    .map(MathVal::toString)
+	    .collect(Collectors.joining(","))
+	    +"]";
+    }	
+}
 
 /**
  * Created by grego on 31.03.2017.
