@@ -2,6 +2,22 @@ group 'io.bitbucket.gregoryk1'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
+
+task execute(type: JavaExec){
+  main = mainClass
+  classpath = sourceSets.main.runtimeClasspath
+}
+
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Design patterns',
+        	'Implementation-Version': version
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)  }  }
+    with jar
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

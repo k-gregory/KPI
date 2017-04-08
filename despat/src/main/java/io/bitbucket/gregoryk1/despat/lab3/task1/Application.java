@@ -28,5 +28,8 @@ public class Application {
         System.out.println();
 
         femaleGiftPackPrototype.clone().accept(nastya);
+	System.out.println();
+	
+	maleGiftPackPrototype.clone().accept(nastya);
     }
 }

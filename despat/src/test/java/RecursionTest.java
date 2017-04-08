@@ -1,5 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
@@ -7,6 +8,7 @@ import java.util.concurrent.RecursiveTask;
 
 import static org.junit.Assert.*;
 
+@Ignore
 public class RecursionTest {
     private final static int N = 3000;
 

@@ -1,3 +1,5 @@
+version=0.1
+
 apply plugin: 'antlr'
 apply plugin: 'java'
 apply plugin: 'application'
@@ -5,7 +7,12 @@ apply plugin: 'application'
 repositories {
     jcenter()
 }
-version=0.1
+
+task execute(type: JavaExec){
+  main = mainClass
+  classpath = sourceSets.main.runtimeClasspath
+}
+
 task fatJar(type: Jar) {
 	manifest {
         attributes 'Implementation-Title': 'Osnovi technologij programuvannya',
