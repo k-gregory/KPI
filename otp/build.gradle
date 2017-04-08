@@ -1,8 +1,19 @@
-apply plugin: 'java'
 apply plugin: 'antlr'
+apply plugin: 'java'
+apply plugin: 'application'
 
 repositories {
     jcenter()
+}
+version=0.1
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Osnovi technologij programuvannya',
+        	'Implementation-Version': version
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)  }  }
+    with jar
 }
 
 dependencies {
