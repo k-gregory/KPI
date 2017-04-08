@@ -36,6 +36,12 @@ public class EvalutionsTests {
     }
 
     @Test
+    public void spacesAreAllowed(){
+        assertNumVal(2.d,"1 + 1");
+        assertNumVal(5.d," a = 1 ; 4 + a ;");
+    }
+
+    @Test
     public void simpleAlgebra(){
         assertNumVal(4.d,"2+2;");
         assertNumVal(1.d,"1+0");

@@ -41,6 +41,7 @@ public class MatrixEvalutor {
     public static void main(String... args){
         MatrixEvalutor evalutor = new MatrixEvalutor();
         Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\\R+");
         while (scanner.hasNext()){
             try {
                 System.out.println(evalutor.evalute(scanner.next()));
