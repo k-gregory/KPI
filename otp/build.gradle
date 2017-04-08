@@ -8,11 +8,6 @@ repositories {
     jcenter()
 }
 
-task execute(type: JavaExec){
-  main = mainClass
-  classpath = sourceSets.main.runtimeClasspath
-}
-
 task fatJar(type: Jar) {
 	manifest {
         attributes 'Implementation-Title': 'Osnovi technologij programuvannya',

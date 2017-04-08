@@ -4,11 +4,6 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'application'
 
-task execute(type: JavaExec){
-  main = mainClass
-  classpath = sourceSets.main.runtimeClasspath
-}
-
 task fatJar(type: Jar) {
 	manifest {
         attributes 'Implementation-Title': 'Design patterns',
