@@ -1,4 +1,4 @@
-package io.github.atommed.otp.lab2.datatypes;
+package io.github.k_gregory.otp.lab2.datatypes;
 
 @FunctionalInterface
 public interface MathValOperation {

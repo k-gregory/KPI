@@ -1,32 +1,30 @@
-package io.github.atommed.otp.lab2;
+package io.github.k_gregory.otp.lab2;
 
-import io.github.atommed.otp.lab2.datatypes.MathVal;
-import io.github.atommed.otp.lab2.datatypes.MathValOperation;
-import io.github.atommed.otp.lab2.datatypes.NumVal;
-import io.github.atommed.otp.lab2.datatypes.VectorVal;
+import io.github.k_gregory.otp.lab2.datatypes.MathVal;
+import io.github.k_gregory.otp.lab2.datatypes.MathValOperation;
+import io.github.k_gregory.otp.lab2.datatypes.NumVal;
+import io.github.k_gregory.otp.lab2.datatypes.VectorVal;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
-/**
- * Created by grego on 31.03.2017.
- */
 class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
     private static final Map<String, MathValOperation> operators;
+
     static {
         operators = new HashMap<>();
-        operators.put("det", mv->new NumVal(((VectorVal) mv).toMatrix().det()));
-        operators.put("rank", mv->new NumVal((double)((VectorVal)mv).toMatrix().rank()));
+        operators.put("det", mv -> new NumVal(((VectorVal) mv).toMatrix().det()));
+        operators.put("rank", mv -> new NumVal((double) ((VectorVal) mv).toMatrix().rank()));
     }
 
     private final Map<String, MathVal> memory;
-    public CalculatorVisitor(Map<String, MathVal> memory){
+
+    public CalculatorVisitor(Map<String, MathVal> memory) {
         this.memory = memory;
     }
 
-    public CalculatorVisitor(){
+    public CalculatorVisitor() {
         this(new HashMap<>());
     }
 
@@ -59,11 +57,11 @@ class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
         MathVal right = visit(ctx.expr(1));
         if (ctx.op.getType() == MatrixParser.MULTIPLY)
             return left.mul(right);
-        else if(ctx.op.getType() == MatrixParser.DIVIDE)
+        else if (ctx.op.getType() == MatrixParser.DIVIDE)
             return left.div(right);
-        else if(ctx.op.getType() == MatrixParser.VECMULT)
+        else if (ctx.op.getType() == MatrixParser.VECMULT)
             return left.vMul(right);
-        else if(ctx.op.getType() == MatrixParser.MATMULT)
+        else if (ctx.op.getType() == MatrixParser.MATMULT)
             return left.matMul(right);
         else throw new UnsupportedOperationException();
     }
@@ -74,8 +72,7 @@ class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
         MathVal right = visit(ctx.expr(1));
         if (ctx.op.getType() == MatrixParser.PLUS) {
             return left.plus(right);
-        }
-        else {
+        } else {
             return left.minus(right);
         }
     }
@@ -101,7 +98,7 @@ class CalculatorVisitor extends MatrixBaseVisitor<MathVal> {
     public MathVal visitFuncall(MatrixParser.FuncallContext ctx) {
         String funcName = ctx.ID().getText();
         MathValOperation mathValOperation = operators.get(funcName);
-        if(mathValOperation == null) throw new UnsupportedOperationException("Not found op "+funcName);
+        if (mathValOperation == null) throw new UnsupportedOperationException("Not found op " + funcName);
         return mathValOperation.perform(visit(ctx.expr()));
     }
 

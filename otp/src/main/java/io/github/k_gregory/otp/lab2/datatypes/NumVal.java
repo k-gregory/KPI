@@ -1,15 +1,16 @@
-package io.github.atommed.otp.lab2.datatypes;
+package io.github.k_gregory.otp.lab2.datatypes;
 
-import io.github.atommed.otp.lab2.MathValVisitor;
+import io.github.k_gregory.otp.lab2.MathValVisitor;
 
 public class NumVal extends MathVal {
     final Double val;
-    public NumVal(Double val){
-	this.val = val;
+
+    public NumVal(Double val) {
+        this.val = val;
     }
 
     @Override
-    public MathVal accept(MathValVisitor v){
+    public MathVal accept(MathValVisitor v) {
         return v.visit(this);
     }
 
@@ -32,7 +33,7 @@ public class NumVal extends MathVal {
 
     @Override
     public MathVal inverse() {
-        return new NumVal(1.d/val);
+        return new NumVal(1.d / val);
     }
 
     @Override
@@ -57,7 +58,9 @@ public class NumVal extends MathVal {
     }
 
     @Override
-    public String toString(){return val.toString();}
+    public String toString() {
+        return val.toString();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -68,7 +71,6 @@ public class NumVal extends MathVal {
 
         return val.equals(numVal.val);
     }
-
 
 
     @Override

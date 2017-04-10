@@ -1,8 +1,8 @@
-package io.github.atommed.otp.lab2.datatypes;
+package io.github.k_gregory.otp.lab2.datatypes;
 
-import io.github.atommed.otp.lab2.MathValVisitor;
+import io.github.k_gregory.otp.lab2.MathValVisitor;
 
-public abstract class MathVal{
+public abstract class MathVal {
     public abstract MathVal accept(MathValVisitor v);
 
     public MathVal mul(MathVal right) {
@@ -25,11 +25,15 @@ public abstract class MathVal{
         throw new UnsupportedOperationException();
     }
 
-    public MathVal absolute(){throw  new UnsupportedOperationException();}
+    public MathVal absolute() {
+        throw new UnsupportedOperationException();
+    }
 
-    public MathVal matMul(MathVal other){throw new UnsupportedOperationException();}
+    public MathVal matMul(MathVal other) {
+        throw new UnsupportedOperationException();
+    }
 
-    public MathVal negate(){
+    public MathVal negate() {
         return mul(new NumVal(-1.d));
     }
 

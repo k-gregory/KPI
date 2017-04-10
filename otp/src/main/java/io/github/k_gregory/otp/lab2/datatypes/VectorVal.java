@@ -1,7 +1,7 @@
-package io.github.atommed.otp.lab2.datatypes;
+package io.github.k_gregory.otp.lab2.datatypes;
 
 import Jama.Matrix;
-import io.github.atommed.otp.lab2.MathValVisitor;
+import io.github.k_gregory.otp.lab2.MathValVisitor;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -10,38 +10,17 @@ import static java.util.Arrays.stream;
 
 public class VectorVal extends MathVal {
     private MathVal[] elements;
-    public VectorVal(MathVal... elements){
+
+    public VectorVal(MathVal... elements) {
         this.elements = elements;
     }
-    @Override
-    public MathVal accept(MathValVisitor v){
-return v.visit(this);
-    }
 
-    private void assureSameLength(VectorVal other){
-        if(elements.length != other.elements.length)
-            throw new IllegalArgumentException("Different number of elements in vector");
-    }
-
-    public Matrix toMatrix(){
-        int m = elements.length;
-        int n = ((VectorVal) elements[0]).elements.length;
-        Matrix matrix = new Matrix(m, n);
-        for(int i = 0; i < m; i++){
-            MathVal[] rows = ((VectorVal) elements[i]).elements;
-            for(int j = 0; j < n; j++){
-                matrix.set(i,j,((NumVal)rows[j]).val);
-            }
-        }
-        return matrix;
-    }
-
-    public static VectorVal fromMatrix(Matrix m){
+    public static VectorVal fromMatrix(Matrix m) {
         double[][] array = m.getArray();
         VectorVal[] rows = new VectorVal[array.length];
-        for(int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             NumVal[] cols = new NumVal[array[i].length];
-            for(int j = 0; j < array[i].length; j++)
+            for (int j = 0; j < array[i].length; j++)
                 cols[j] = new NumVal(array[i][j]);
             rows[i] = new VectorVal(cols);
         }
@@ -49,18 +28,41 @@ return v.visit(this);
     }
 
     @Override
+    public MathVal accept(MathValVisitor v) {
+        return v.visit(this);
+    }
+
+    private void assureSameLength(VectorVal other) {
+        if (elements.length != other.elements.length)
+            throw new IllegalArgumentException("Different number of elements in vector");
+    }
+
+    public Matrix toMatrix() {
+        int m = elements.length;
+        int n = ((VectorVal) elements[0]).elements.length;
+        Matrix matrix = new Matrix(m, n);
+        for (int i = 0; i < m; i++) {
+            MathVal[] rows = ((VectorVal) elements[i]).elements;
+            for (int j = 0; j < n; j++) {
+                matrix.set(i, j, ((NumVal) rows[j]).val);
+            }
+        }
+        return matrix;
+    }
+
+    @Override
     public MathVal mul(MathVal right) {
         return right.accept(new MathValVisitor() {
             @Override
             public MathVal visit(NumVal num) {
-                return new VectorVal(stream(elements).map(el->el.mul(num)).toArray(MathVal[]::new));
+                return new VectorVal(stream(elements).map(el -> el.mul(num)).toArray(MathVal[]::new));
             }
 
             @Override
             public MathVal visit(VectorVal vector) {
                 assureSameLength(vector);
                 MathVal sum = elements[0].mul(vector.elements[0]);
-                for(int i = 1; i < elements.length; i++){
+                for (int i = 1; i < elements.length; i++) {
                     sum = sum.plus(elements[i].mul(vector.elements[i]));
                 }
                 return sum;
@@ -73,14 +75,14 @@ return v.visit(this);
         return right.accept(new MathValVisitor() {
             @Override
             public MathVal visit(NumVal num) {
-                return new VectorVal(stream(elements).map(el->el.plus(num)).toArray(MathVal[]::new));
+                return new VectorVal(stream(elements).map(el -> el.plus(num)).toArray(MathVal[]::new));
             }
 
             @Override
             public MathVal visit(VectorVal vector) {
                 assureSameLength(vector);
                 MathVal[] newVector = new MathVal[elements.length];
-                for(int i =0; i < elements.length;i++)
+                for (int i = 0; i < elements.length; i++)
                     newVector[i] = elements[i].plus(vector.elements[i]);
                 return new VectorVal(newVector);
             }
@@ -92,7 +94,7 @@ return v.visit(this);
         return right.accept(new MathValVisitor() {
             @Override
             public MathVal visit(VectorVal vector) {
-                if(elements.length != 3 || vector.elements.length != 3)
+                if (elements.length != 3 || vector.elements.length != 3)
                     throw new IllegalArgumentException("Can't mult vectors if not 3 dismension");
                 MathVal[] a = elements;
                 MathVal[] b = vector.elements;
@@ -127,8 +129,8 @@ return v.visit(this);
     }
 
     @Override
-    public String toString(){
-	return "["+ stream(elements).map(MathVal::toString).collect(Collectors.joining(",")) +"]";
+    public String toString() {
+        return "[" + stream(elements).map(MathVal::toString).collect(Collectors.joining(",")) + "]";
     }
 
     @Override

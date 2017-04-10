@@ -1,16 +1,13 @@
 grammar Matrix;
 
 @header{
-package io.github.atommed.otp.lab2;
+package io.github.k_gregory.otp.lab2;
 }
 
 defProg: statement | (statement ';')+ statement?;
-//defProg: statement (';' statement)+ ';'?;
-//defProg: (statement ';')* statement?;
-
 statement: assign | expr;
 
-//group: '(' expr ')';
+assign: ID '=' expr;
 expr:
     expr '^t' #Transpose
     | expr '^1' #Inverse
@@ -26,8 +23,6 @@ expr:
 literal:
  vector #VectorLiteral
  | NUMBER #NumLiteral;
-//funcall: ID '(' expr (',' expr)* ')';
-assign: ID '=' expr;
 
 vector: '[' expr (',' expr)* ']';
 
