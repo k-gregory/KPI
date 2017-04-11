@@ -1,5 +1,6 @@
 package io.github.k_gregory.otp.lab2;
 
+import io.github.k_gregory.otp.lab1.ParseException;
 import io.github.k_gregory.otp.lab2.datatypes.MathVal;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -42,8 +43,8 @@ public class MatrixEvalutor {
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         MatrixParser parser = new MatrixParser(tokenStream);
         CalculatorVisitor visitor = new CalculatorVisitor(memory);
-        MathVal result = visitor.visit(parser.defProg());
-        if (parser.getNumberOfSyntaxErrors() != 0) throw new RuntimeException("Bad source code!");
-        return result;
+        MatrixParser.DefProgContext tree = parser.defProg();
+        if (parser.getNumberOfSyntaxErrors() != 0) throw new ParseException("Bad source code!");
+        return visitor.visit(tree);
     }
 }

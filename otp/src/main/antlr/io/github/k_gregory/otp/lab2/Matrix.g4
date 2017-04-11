@@ -4,7 +4,7 @@ grammar Matrix;
 package io.github.k_gregory.otp.lab2;
 }
 
-defProg: statement | (statement ';')+ statement?;
+defProg: (statement | (statement ';')+ statement?) EOF;
 statement: assign | expr;
 
 assign: ID '=' expr;

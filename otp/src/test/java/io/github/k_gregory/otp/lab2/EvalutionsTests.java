@@ -1,6 +1,7 @@
 package io.github.k_gregory.otp.lab2;
 
 import Jama.Matrix;
+import io.github.k_gregory.otp.lab1.ParseException;
 import io.github.k_gregory.otp.lab2.datatypes.MathVal;
 import io.github.k_gregory.otp.lab2.datatypes.NumVal;
 import io.github.k_gregory.otp.lab2.datatypes.VectorVal;
@@ -26,6 +27,16 @@ public class EvalutionsTests {
 
     private void assertNumVecVal(String expression, Double... doubles) {
         assertCalculate(new VectorVal(Arrays.stream(doubles).map(NumVal::new).toArray(NumVal[]::new)), expression);
+    }
+
+    @Test(expected = ParseException.class)
+    public void bracketsMatch() {
+        calculate("1+[[13]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void noExtraParsed() {
+        calculate("1+2 ololo some");
     }
 
     @Test
