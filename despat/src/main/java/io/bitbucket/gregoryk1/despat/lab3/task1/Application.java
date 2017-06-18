@@ -4,7 +4,7 @@ package io.bitbucket.gregoryk1.despat.lab3.task1;
  * Created by grego on 08.04.2017.
  */
 public class Application {
-    public static void main(String ... args) throws CloneNotSupportedException {
+    public static void main(String... args) throws CloneNotSupportedException {
         Gift maleGiftPackPrototype = new GiftPack(
                 new SweetRoll("eggs"),
                 new CarModel("Audi")
@@ -28,8 +28,8 @@ public class Application {
         System.out.println();
 
         femaleGiftPackPrototype.clone().accept(nastya);
-	System.out.println();
-	
-	maleGiftPackPrototype.clone().accept(nastya);
+        System.out.println();
+
+        maleGiftPackPrototype.clone().accept(nastya);
     }
 }

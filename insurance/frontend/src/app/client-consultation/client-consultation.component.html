@@ -1,0 +1,8 @@
+<div>
+  <label>
+    Input your message for support:
+    <input [(ngModel)]="currentMessage">
+  </label>
+  <button (click)="addMessage()">Add message</button>
+  <app-messages [list]="messages"></app-messages>
+</div>

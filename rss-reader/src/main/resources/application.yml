@@ -1,0 +1,9 @@
+spring:
+  jpa.hibernate.ddl-auto: update
+  datasource:
+    url: jdbc:postgresql:insurance
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    #url: jdbc:h2:./data/db;DB_CLOSE_ON_EXIT=FALSE
+
+logging.level.root: info

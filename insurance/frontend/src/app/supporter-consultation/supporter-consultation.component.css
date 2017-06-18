@@ -1,0 +1,12 @@
+#consultPod table td {
+  border: solid lightgreen 1px;
+}
+
+.goodrow {
+  background: red;
+}
+
+#consultPod table .msgnotify {
+  color:yellow;
+  background-color: blue;
+}

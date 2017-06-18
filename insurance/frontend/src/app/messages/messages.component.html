@@ -1,0 +1,5 @@
+<div class="msgo">
+  <div *ngFor="let message of messages" ngClass="{{message.fromSupport ? 'sup' : 'client'}}">
+    {{message.text}}
+  </div>
+</div>

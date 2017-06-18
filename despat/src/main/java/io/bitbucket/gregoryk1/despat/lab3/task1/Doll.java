@@ -7,7 +7,7 @@ public class Doll implements Gift {
     private String name = "unnamed";
     private String dressName = "no dress";
 
-    public void setDress(String dress){
+    public void setDress(String dress) {
         this.dressName = dress;
     }
 
@@ -17,7 +17,7 @@ public class Doll implements Gift {
 
     @Override
     public String toString() {
-        return "doll "+ name + " in " + dressName;
+        return "doll " + name + " in " + dressName;
     }
 
     @Override

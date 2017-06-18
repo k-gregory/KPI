@@ -1,0 +1,27 @@
+<div id="consultPod">
+  <table>
+    <tr *ngFor="let client of clients" ngClass="{{client.id == consultation.selectedClient ? 'goodrow':''}}">
+      <td>
+        ID: "{{client.id}}"
+      </td>
+      <td>
+        <button (click)="selectClient(client.id)">View chat</button>
+      </td>
+      <td>
+        <button (click)="assignClient(client.id)" *ngIf="!client.assigned">Assign to me</button>
+        <button (click)="unassignClient(client.id)" *ngIf="client.assignedToMe">Unassign from me</button>
+      </td>
+      <td [ngClass]="{'msgnotify': client.hasNewMessages && client.assignedToMe}">{{client.hasNewMessages ? "New message!":"No new messages"}}</td>
+    </tr>
+  </table>
+
+  <div *ngIf="consultation.selectedClient">
+    <label>
+      Write answer:
+      <input [(ngModel)]="message">
+    </label>
+    <button (click)="answer()">Post answer!</button>
+  </div>
+
+  <app-messages [list]="currentMessages"></app-messages>
+</div>

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${DB_JDBC}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+spring.jpa.properties.hibernate:
+  show_sql: true
+  use_sql_comments: true
+  format_sql: true
+
+app:
+  remember-me:
+    parameter-name: remember-me
+    key: ${SECURITY_KEY}

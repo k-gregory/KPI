@@ -1,7 +1,5 @@
 package io.bitbucket.gregoryk1.despat.lab3.task1;
 
-import java.util.Random;
-
 /**
  * Created by grego on 08.04.2017.
  */
@@ -12,7 +10,7 @@ public class MaleGiftVisitor extends BaseGiftVisitor {
 
     @Override
     public void visit(CarModel c) {
-        if(!isCalm()){
+        if (!isCalm()) {
             System.out.println(name + " doesn't like " + c + ", he crushes it");
             c.crush();
         }
@@ -21,6 +19,6 @@ public class MaleGiftVisitor extends BaseGiftVisitor {
 
     @Override
     public void visit(Doll d) {
-        say(d+" is still better than a sweetroll");
+        say(d + " is still better than a sweetroll");
     }
 }

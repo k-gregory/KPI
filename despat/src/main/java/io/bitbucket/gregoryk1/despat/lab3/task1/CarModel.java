@@ -4,16 +4,19 @@ package io.bitbucket.gregoryk1.despat.lab3.task1;
  * Created by grego on 07.04.2017.
  */
 public class CarModel implements Gift {
-    private boolean isBroken;
     private final String name;
+    private boolean isBroken;
 
     public CarModel(String name) {
         this.name = name;
     }
 
-    public void crush(){isBroken = true;}
-    public void move(){
-        System.out.println(isBroken ? "Broken car can't move =\\" : "Car " + name +" model moves!");
+    public void crush() {
+        isBroken = true;
+    }
+
+    public void move() {
+        System.out.println(isBroken ? "Broken car can't move =\\" : "Car " + name + " model moves!");
     }
 
     @Override

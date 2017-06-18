@@ -12,9 +12,9 @@ public class GiftPack implements Gift {
     }
 
     @Override
-    public Gift clone() throws CloneNotSupportedException{
+    public Gift clone() throws CloneNotSupportedException {
         Gift[] gifts = new Gift[this.gifts.length];
-        for(int i = 0; i < gifts.length; i++)
+        for (int i = 0; i < gifts.length; i++)
             gifts[i] = this.gifts[i].clone();
         GiftPack copy = (GiftPack) super.clone();
         copy.gifts = gifts;

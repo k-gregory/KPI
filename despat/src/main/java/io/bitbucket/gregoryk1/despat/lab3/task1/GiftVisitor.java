@@ -5,10 +5,13 @@ package io.bitbucket.gregoryk1.despat.lab3.task1;
  */
 public interface GiftVisitor {
     void visit(CarModel c);
+
     void visit(Doll d);
+
     void visit(SweetRoll s);
-    default void visit(GiftPack pack){
-        for(Gift g : pack.getGifts())
+
+    default void visit(GiftPack pack) {
+        for (Gift g : pack.getGifts())
             g.accept(this);
     }
 }

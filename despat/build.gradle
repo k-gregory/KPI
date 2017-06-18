@@ -2,7 +2,6 @@ group 'io.bitbucket.gregoryk1'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'application'
 
 task fatJar(type: Jar) {
 	manifest {

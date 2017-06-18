@@ -7,37 +7,41 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 
-interface MoneyCollector{
+interface MoneyCollector {
     double collectMoney();
+
     String getName();
+
     void display(int depth);
 
-    default void printCollects(int depth){
+    default void printCollects(int depth) {
         String money = NumberFormat.getCurrencyInstance(Locale.US).format(collectMoney());
         Util.print(depth, getName() + " collects " + money);
     }
 }
 
 class Util {
-    public static void print(int prefixLength, String content){
+    public static void print(int prefixLength, String content) {
         char[] chars = new char[prefixLength];
         Arrays.fill(chars, '.');
-        System.out.println(new String(chars)+content);
+        System.out.println(new String(chars) + content);
     }
 
-    private static double randomInRange(Random r, double min, double max){
+    private static double randomInRange(Random r, double min, double max) {
         return min + r.nextDouble() * (max - min);
     }
 
-    public static MoneyCollector createComposite(String role, Fairy fairy, MoneyCollector... slaves){
+    public static MoneyCollector createComposite(String role, Fairy fairy, MoneyCollector... slaves) {
         return new CompositeMoneyCollector(
-                role + " " + fairy.person().getFullName(),slaves
+                role + " " + fairy.person().getFullName(), slaves
         );
     }
 
-    public static String fullName(Fairy fairy){return fairy.person().getFullName();}
+    public static String fullName(Fairy fairy) {
+        return fairy.person().getFullName();
+    }
 
-    public static MoneyCollector[] createParent(double minProfit, double maxProfit, int length, Fairy fairy){
+    public static MoneyCollector[] createParent(double minProfit, double maxProfit, int length, Fairy fairy) {
         MoneyCollector[] collectors = new MoneyCollector[length];
         Random rng = new Random();
         for (int i = 0; i < length; i++) {
@@ -48,7 +52,7 @@ class Util {
     }
 }
 
-class LeafMoneyCollector implements MoneyCollector{
+class LeafMoneyCollector implements MoneyCollector {
     private final String name;
     private final double givesMoney;
 
@@ -73,24 +77,25 @@ class LeafMoneyCollector implements MoneyCollector{
     }
 }
 
-class CompositeMoneyCollector implements MoneyCollector{
+class CompositeMoneyCollector implements MoneyCollector {
     private final MoneyCollector[] moneyCollectors;
     private final String name;
-    public CompositeMoneyCollector(String name, MoneyCollector... moneyCollectors){
+
+    public CompositeMoneyCollector(String name, MoneyCollector... moneyCollectors) {
         this.name = name;
         this.moneyCollectors = moneyCollectors;
     }
 
     @Override
     public double collectMoney() {
-        return  Arrays.stream(moneyCollectors)
+        return Arrays.stream(moneyCollectors)
                 .map(MoneyCollector::collectMoney).reduce(0.d, Double::sum);
     }
 
     @Override
     public void display(int depth) {
         printCollects(depth);
-        for(MoneyCollector mc: moneyCollectors)
+        for (MoneyCollector mc : moneyCollectors)
             mc.display(depth + 6);
     }
 
@@ -101,9 +106,8 @@ class CompositeMoneyCollector implements MoneyCollector{
 }
 
 
-
 public class Task2 {
-    public static void main(String... args){
+    public static void main(String... args) {
         Fairy fairy = Fairy.create();
         MoneyCollector[] parents2b = Util.createParent(30, 60, 5, fairy);
         MoneyCollector[] parents3a = Util.createParent(60, 80, 3, fairy);

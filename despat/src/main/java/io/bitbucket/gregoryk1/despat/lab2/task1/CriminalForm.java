@@ -2,7 +2,6 @@ package io.bitbucket.gregoryk1.despat.lab2.task1;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 
 /**
  * Created by grego on 01.04.2017.

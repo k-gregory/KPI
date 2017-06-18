@@ -1,0 +1,12 @@
+.idea/
+build/
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+
+*.log
+
+#H2 database
+data/
+

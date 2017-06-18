@@ -3,11 +3,12 @@ package io.bitbucket.gregoryk1.despat.lab2.task2;
 import java.time.LocalDate;
 
 public class Application {
-    private static void lineSeparation(){
-        for(int i = 0; i < 15; i++) System.out.print(' ');
+    private static void lineSeparation() {
+        for (int i = 0; i < 15; i++) System.out.print(' ');
         System.out.println();
     }
-    public static void main(String... args){
+
+    public static void main(String... args) {
         Terminal terminal = new Terminal();
         SubwayClient john = new SubwayClient("John");
 
@@ -25,7 +26,7 @@ public class Application {
         lineSeparation();
 
         john.buyPassesSubscription(3);
-        for(int i=0; i < 4; i++) terminal.pass(john, john.passSubscriptionPayment());
+        for (int i = 0; i < 4; i++) terminal.pass(john, john.passSubscriptionPayment());
         lineSeparation();
 
         john.buyMonthSubscription(LocalDate.now().minusMonths(1).minusDays(1));
