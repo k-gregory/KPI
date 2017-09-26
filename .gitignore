@@ -11,3 +11,5 @@ gradlew.bat
 
 .idea/
 *.iml
+
+__pycache__/
