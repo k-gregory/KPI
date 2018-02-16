@@ -26,12 +26,12 @@ def call_prog(*args):
 class TestFileCopying(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.in_filename = 'build/will-be-overwritten'
-        self.out_filename = 'build/will-be-removed'
-        self.same_filename = 'build/will-be-overwritten2'
+        self.in_filename = '/tmp/will-be-overwritten'
+        self.out_filename = '/tmp/will-be-removed'
+        self.same_filename = '/tmp/will-be-overwritten2'
         self.link_src = 'will-be-overwritten2' #depends on same_filename
         self.nonexist_filename = '/does/not/exist'
-        self.link_filename = 'build/link'
+        self.link_filename = '/tmp/link-overwritten'
 
         assert not os.path.exists(self.nonexist_filename)
 
@@ -48,7 +48,9 @@ class TestFileCopying(unittest.TestCase):
 
 
     def test_args_count(self):
-        for args in [(), (self.in_filename,)]:
+        for args in [(), 
+                (self.in_filename,), 
+                (self.in_filename, self.out_filename, self.same_filename)]:
             with self.subTest(args=args):
                 (code, out, err) = call_prog(*args)
                 self.assertEqual(code, 1)
