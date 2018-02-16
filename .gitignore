@@ -15,3 +15,4 @@ gradlew.bat
 __pycache__/
 
 *~
+*.swp
