@@ -133,6 +133,9 @@ class TestFileCopying(unittest.TestCase):
         self.assertIn(str(len(text)), out)
         self.assertEqual(text.lower(), res_content)
 
+    def test_overwrites_existing_content(self):
+        overwrite(self.out_filename, "This will not be written after test")
+        self.assertRunWithText("Will be in file")
 
     def test_content_written(self):
         content = 'QWerTYU\tiOpjk\ndASdFGhKLXCvbnrTYI\0sdEWRdfDRwErVRwerFSrre\n'
