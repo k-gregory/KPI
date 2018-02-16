@@ -13,3 +13,5 @@ gradlew.bat
 *.iml
 
 __pycache__/
+
+*~
