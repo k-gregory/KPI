@@ -81,7 +81,7 @@ class TestFileCopying(unittest.TestCase):
 
 
     def test_file_created(self):
-        overwrite(self.in_filename, self.out_filename)
+        overwrite(self.in_filename, 'dummy')
         (return_code, out, err) = call_prog(self.in_filename, self.out_filename)
         file_exists = Path(self.out_filename).is_file()
         file_mode = os.stat(self.in_filename)[ST_MODE]
@@ -134,8 +134,8 @@ class TestFileCopying(unittest.TestCase):
         self.assertEqual(text.lower(), res_content)
 
     def test_overwrites_existing_content(self):
-        overwrite(self.out_filename, "This will not be written after test")
-        self.assertRunWithText("Will be in file")
+        overwrite(self.out_filename, 'This will not be written after test')
+        self.assertRunWithText('Will be in file')
 
     def test_content_written(self):
         content = 'QWerTYU\tiOpjk\ndASdFGhKLXCvbnrTYI\0sdEWRdfDRwErVRwerFSrre\n'

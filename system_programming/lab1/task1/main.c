@@ -17,9 +17,11 @@ const int BUFF_SIZE = 7;
  * This function doesn't close the FDs
  */
 ssize_t lowering_sendfile(int src_fd, int dest_fd){
-  char buffer[BUFF_SIZE];
   ssize_t read_bytes, bytes_counter;
+  ssize_t return_value;
+  char *buffer;
 
+  buffer = malloc(BUFF_SIZE);
   bytes_counter = 0;
 
   do {
@@ -29,7 +31,8 @@ ssize_t lowering_sendfile(int src_fd, int dest_fd){
     read_bytes = read(src_fd, buffer, BUFF_SIZE);
 
     if(read_bytes < 0){
-      return -1;
+      return_value = -1;
+      goto CLEANUP_BUFFER;
     }
 
     buffer_pos = buffer;
@@ -45,7 +48,8 @@ ssize_t lowering_sendfile(int src_fd, int dest_fd){
 
       wrote_bytes = write(dest_fd, buffer_pos, buffer_end - buffer_pos);
       if(wrote_bytes < 0){
-	return -1;
+	return_value = -1;
+	goto CLEANUP_BUFFER;
       }
 
       buffer_pos += wrote_bytes;
@@ -54,7 +58,12 @@ ssize_t lowering_sendfile(int src_fd, int dest_fd){
     bytes_counter += read_bytes;
   } while(read_bytes != 0);
 
-  return bytes_counter;
+  return_value = bytes_counter;
+  
+ CLEANUP_BUFFER:
+  free(buffer);
+  
+  return return_value;
 }
 
 int main(int argc, char *argv[]){
