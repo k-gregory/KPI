@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const int BUFF_SIZE = 7;
+static const size_t BUFF_SIZE = 7;
 
 /*
  * Reads data from src_fd, lowers it and writes to dest_fd
@@ -123,11 +123,13 @@ int main(int argc, char *argv[]) {
 CLEANUP_OUT_FD:
   if (close(out_fd) != 0) {
     perror("Can't close output file");
+    exit_code = EXIT_FAILURE;
   }
 
 CLEANUP_IN_FD:
   if (close(in_fd) != 0) {
     perror("Can't close input file");
+    exit_code = EXIT_FAILURE;
   }
 
 CLEANUP_BUFFER:
