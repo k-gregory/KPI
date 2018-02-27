@@ -84,7 +84,7 @@ class TestFileCopying(unittest.TestCase):
         overwrite(self.in_filename, 'dummy')
         (return_code, out, err) = call_prog(self.in_filename, self.out_filename)
         file_exists = Path(self.out_filename).is_file()
-        file_mode = os.stat(self.in_filename)[ST_MODE]
+        file_mode = os.stat(self.out_filename)[ST_MODE]
 
         self.assertEqual(return_code, 0)
         self.assertTrue(file_exists)
