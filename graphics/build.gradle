@@ -1,0 +1,4 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName="io.github.k_gregory.graphics.lab1.Application"
