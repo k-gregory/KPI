@@ -1,13 +1,7 @@
-package io.github.k_gregory.graphics.lab1;
-
-import java.awt.*;
+package io.github.k_gregory.graphics.lab2;
 
 import javax.swing.*;
-import javax.swing.SwingUtilities;
-
-import org.ejml.simple.SimpleMatrix;
-
-import io.github.k_gregory.graphics.*;
+import java.awt.*;
 
 abstract class DrawPanel extends JPanel{
   long usec;
@@ -27,6 +21,8 @@ abstract class DrawPanel extends JPanel{
   }
 
   public DrawPanel(){
+      setPreferredSize(new Dimension(640, 480));
+
     usec = System.nanoTime();
 
     new Timer(10, (a)->{
@@ -56,7 +52,7 @@ public class Application {
 
   public static void main(String... args){
     SwingUtilities.invokeLater(()->{
-      JFrame f = new JFrame("LOL");
+        JFrame f = new JFrame("Lab2");
       DrawPanel panel = new SunPanel();
       f.add(panel);
       f.pack();

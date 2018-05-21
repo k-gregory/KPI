@@ -1,13 +1,10 @@
-package io.github.k_gregory.graphics.lab1;
+package io.github.k_gregory.graphics.lab2;
 
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.SwingUtilities;
-
+import io.github.k_gregory.graphics.Point2d;
+import io.github.k_gregory.graphics.Transform;
 import org.ejml.simple.SimpleMatrix;
 
-import io.github.k_gregory.graphics.*;
+import java.awt.*;
 
 
 public class SunPanel extends DrawPanel {
