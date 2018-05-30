@@ -1,0 +1,55 @@
+#==================================================
+#Material list
+#This file has been created by PoseRay v3.13.29.645
+#3D model to POV-Ray/Moray Converter.
+#Author: FlyerX
+#Email: flyerx_2000@yahoo.com
+#Web: https://sites.google.com/site/poseray/
+#==================================================
+ 
+#==================================================
+newmtl Cat_Base
+Ns 100.000002235174
+Ka 0 0 0
+Kd 0.63921568627451 0.63921568627451 0.63921568627451
+Ks 0.501960784313725 0.501960784313725 0.501960784313725
+d 1
+#Ka2 0 0 0
+#Ks2 0 0 0
+#Ns2 100
+#r 0
+#r2 0
+#blend 0
+#cell_hi
+#ref_fresnel 1.33
+#fake_fresnel_power 8
+#fake_fresnel_strength 0.5
+#sslt 0
+#interp 0 0 0 0
+#gamma default
+#gammacolor srgb
+#diffuse 0.6
+ 
+#==================================================
+newmtl Eyes
+Ns 100.000002235174
+Ka 0 0 0
+Kd 0.63921568627451 0.63921568627451 0.63921568627451
+Ks 0.501960784313725 0.501960784313725 0.501960784313725
+d 1
+#Ka2 0 0 0
+#Ks2 0 0 0
+#Ns2 100
+#r 0
+#r2 0
+#blend 0
+#cell_hi
+#ref_fresnel 1.33
+#fake_fresnel_power 8
+#fake_fresnel_strength 0.5
+#sslt 0
+#interp 0 0 0 0
+#gamma default
+#gammacolor srgb
+#diffuse 0.6
+ 
