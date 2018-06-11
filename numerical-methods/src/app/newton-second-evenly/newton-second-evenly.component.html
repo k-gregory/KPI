@@ -12,7 +12,7 @@
     <canvas baseChart width="400" height="400"
             chartType="scatter"
             [options]="opts"
-            [datasets]="inputDatasets"></canvas>
+            [datasets]="inputDataset"></canvas>
     <canvas #myOwn width="400" height="400" ></canvas>
   </div>
   <app-file-input (loaded)="inputSelected($event)"></app-file-input>

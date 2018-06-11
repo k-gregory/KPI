@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {trapetion_simple} from "../romberg";
-import {f, l} from "../f";
+import {trapetion_simple} from "../trapetion";
+import {f, l, h} from "../f";
 
 @Component({
   selector: 'app-trapezoid',
@@ -14,9 +14,8 @@ export class TrapezoidComponent implements OnInit {
   constructor() { }
 
   calc(){
-    let h = parseFloat(this.h);
-    this.result = trapetion_simple(f, l, h, h);
-    console.log(this.result);
+    let dist = parseFloat(this.h);
+    this.result = trapetion_simple(f, l, h, dist);
   }
 
   ngOnInit() {
