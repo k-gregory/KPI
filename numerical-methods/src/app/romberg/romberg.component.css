@@ -1,0 +1,7 @@
+.rom-table, .rom-table td, .rom-table th{
+  border: 1px black solid;
+}
+
+.empty{
+  background-color: gray;
+}

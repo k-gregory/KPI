@@ -1,0 +1,14 @@
+<div>
+  <label>
+    Accuracy
+    <input type="text" [(ngModel)]="e"/>
+  </label>
+  <button (click)="calc()">Calc</button>
+  <div *ngIf="result">{{result.result}} with accuracy {{result.accuracy}}</div>
+  <div *ngIf="error">Error: {{error}}</div>
+  <table class="rom-table" *ngIf="result">
+    <tr *ngFor="let row of result.table">
+      <td *ngFor="let col of row" [class.empty]="col == null">{{col}}</td>
+    </tr>
+  </table>
+</div>

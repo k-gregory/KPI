@@ -1,0 +1,13 @@
+<div>
+  integrate sh(sqrt(1-x))/sqrt(1-x) from -13 to -5
+  <iframe width="400" height="400" *ngIf="false"
+          src="https://www.wolframalpha.com/input/?i=integrate+sh(sqrt(1-x))%2Fsqrt(1-x)+from+-13+to+-5"></iframe>
+  <br>
+
+  <label>
+    H
+    <input type="text" [(ngModel)]="h">
+  </label>
+  <button (click)="calc()">Calc</button>
+  Result: {{ result }}
+</div>

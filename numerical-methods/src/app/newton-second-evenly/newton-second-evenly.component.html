@@ -1,0 +1,27 @@
+<div>
+  <span *ngIf="error">{{error}}</span>
+  <div class="input-display" *ngIf="inputFunction">
+    <table>
+      <thead>
+      <tr><td>X</td><td>Y</td></tr>
+      </thead>
+      <tr *ngFor="let p of inputFunction">
+        <td>{{p.x}}</td><td>{{p.y}}</td>
+      </tr>
+    </table>
+    <canvas baseChart width="400" height="400"
+            chartType="scatter"
+            [options]="opts"
+            [datasets]="inputDatasets"></canvas>
+    <canvas #myOwn width="400" height="400" ></canvas>
+  </div>
+  <app-file-input (loaded)="inputSelected($event)"></app-file-input>
+  <div *ngIf="inputFunction">
+    <label>
+      Point
+      <input type="text" [(ngModel)]="point">
+    </label>
+    <button (click)="calc()">Calc</button>
+    <span>{{result}}</span>
+  </div>
+</div>
