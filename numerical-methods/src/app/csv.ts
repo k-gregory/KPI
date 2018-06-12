@@ -18,3 +18,17 @@ export function decodeCsv(csvSrc): {x: number, y: number}[] {
 
   return map;
 }
+
+export function getControls(csvSrc: string): number[] {
+  const data = Papa.parse(csvSrc);
+  if(data.errors.length != 0){
+    console.log(data.errors);
+    throw new Error("Can't parse")
+  }
+
+  return data.data.filter(e=>e.length != 0)[0].map(e=>{
+    const r = parseFloat(e);
+    if(isNaN(r)) throw new Error("Nan");
+    return r;
+  });
+}

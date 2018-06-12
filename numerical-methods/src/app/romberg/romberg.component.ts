@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {romberg, RombergResult, trapetion_simple} from "../romberg";
+import {romberg, RombergResult} from "../romberg";
 import {f, h, l} from "../f";
 
 @Component({
