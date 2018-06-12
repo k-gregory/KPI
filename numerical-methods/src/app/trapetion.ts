@@ -2,6 +2,8 @@ export function trapetion_simple(f: (number) => number, low: number, high: numbe
   let n = Math.ceil((high - low) / h);
   h = (high - low) / n;
 
+  console.log(n);
+
   let res = 0;
 
   res += (f(low) + f(high)) / 2;
