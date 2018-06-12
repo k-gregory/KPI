@@ -3,8 +3,8 @@ export class FirstNewton {
 
   constructor(_values: { x: number, y: number }[]) {
     this._values = [..._values];
-    /*this._values.sort((a,b)=>(b.x - a.x))*/
-    this._values.sort((a,b)=>(a.x - b.x))
+    this._values.sort((a,b)=>(b.x - a.x))
+    //this._values.sort((a,b)=>(a.x - b.x))
   }
 
   _cache: { [key: string]: number } = {};
@@ -135,8 +135,7 @@ export class SecondNewtonEvenly {
     if (length == 1)
       return this._values[from].y;
 
-    return (this.CachedDelta(from + 1, length - 1) - this.CachedDelta(from, length - 1))
-      / (this._values[from + length - 1].x - this._values[from].x);
+    return (this.CachedDelta(from + 1, length - 1) - this.CachedDelta(from, length - 1));
   }
 
   private static GetCacheKey(from: number, length: number): string {
