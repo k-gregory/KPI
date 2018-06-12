@@ -1,3 +1,33 @@
-<p>
-  newton-first works!
-</p>
+<div>
+  <div class="input-display" *ngIf="inputFunction">
+    <table>
+      <thead>
+      <tr><td>X</td><td>Y</td></tr>
+      </thead>
+      <tr *ngFor="let p of inputFunction">
+        <td>{{p.x}}</td><td>{{p.y}}</td>
+      </tr>
+    </table>
+    <canvas
+      *ngIf="chartDss"
+      baseChart width="400" height="400"
+      chartType="scatter"
+      [options]="options"
+      [colors]="colors"
+      [datasets]="chartDss"></canvas>
+    <canvas #myOwn width="400" height="400" ></canvas>
+  </div>
+  <div>
+    <app-file-input caption="Select input values" (loaded)="inputSelected($event)"></app-file-input><br>
+    <app-file-input *ngIf="inputFunction" caption="Select control values" (loaded)="controlSelected($event)"></app-file-input>
+  </div>
+  <div *ngIf="inputFunction">
+    <label>
+      Point
+      <input type="text" [(ngModel)]="point">
+    </label>
+    <button (click)="calc()">Calc</button>
+    <span *ngIf="error">{{error}}</span>
+    <span>{{result}}</span>
+  </div>
+</div>
