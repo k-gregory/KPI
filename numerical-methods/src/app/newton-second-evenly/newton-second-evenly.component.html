@@ -21,13 +21,13 @@
     <app-file-input caption="Select input values" (loaded)="inputSelected($event)"></app-file-input><br>
     <app-file-input *ngIf="inputFunction" caption="Select control values" (loaded)="controlSelected($event)"></app-file-input>
   </div>
+  <span *ngIf="error">{{error}}</span>
   <div *ngIf="inputFunction">
     <label>
       Point
       <input type="text" [(ngModel)]="point">
     </label>
     <button (click)="calc()">Calc</button>
-    <span *ngIf="error">{{error}}</span>
     <span>{{result}}</span>
   </div>
 </div>

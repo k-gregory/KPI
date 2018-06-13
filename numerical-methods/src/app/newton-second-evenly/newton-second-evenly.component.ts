@@ -82,6 +82,7 @@ export class NewtonSecondEvenlyComponent {
 
     try{
       this.inputFunction = decodeCsv(csv);
+      console.log(this.inputFunction);
       this.updateDss();
     } catch (e) {
       this.error = e.toString();

@@ -4,7 +4,6 @@ export class FirstNewton {
   constructor(_values: { x: number, y: number }[]) {
     this._values = [..._values];
     this._values.sort((a,b)=>(b.x - a.x))
-    //this._values.sort((a,b)=>(a.x - b.x))
   }
 
   _cache: { [key: string]: number } = {};
@@ -170,9 +169,47 @@ export class SecondNewtonEvenly {
   }
 }
 
+function fact(i: number): number {
+  let result = 1;
+  for (; i != 1; i--)
+    result = result * i;
+  return result;
+}
 
 export function newton_second_evenly(f: { x: number, y: number }[], x: number) {
-  return new SecondNewtonEvenly(f).Interpolate(x);
+  f = [...f];
+  f.sort((a,b)=>(b.x - a.x));
+
+  const n = f.length;
+  const columns = [f.map(e=>e.y)];
+  let brkN = n;
+
+  for(let column = 1; column < n; column++){
+    const col = [];
+    columns.push(col);
+    for(let row = 0; row < n - column; row++){
+      col.push(columns[column - 1][row + 1] - columns[column - 1][row]);
+    }
+    if(Math.abs(Math.min.apply(null, col)) < 1e-9){
+      brkN = column;
+      break;
+    }
+  }
+
+  let h = (f[1].x - f[0].x);
+  let q = (x - f[0].x) / h;
+  let qmult = 1;
+  let nMult = 1;
+  let sum = f[0].y;
+
+  for(let i = 1; i  < brkN; i++){
+    qmult *= (q - i + 1);
+    nMult *= (i);
+
+    sum += qmult / nMult * columns[i][0];
+  }
+
+  return sum;
 }
 
 export function newton_first(f: {x: number, y: number}[], x: number){

@@ -2,8 +2,10 @@ import * as Papa from 'papaparse'
 
 export function decodeCsv(csvSrc): {x: number, y: number}[] {
   const data = Papa.parse(csvSrc);
-  if(data.errors.length != 0)
+  if(data.errors.length != 0) {
+    console.log(data.errors);
     throw new Error("Can't parse");
+  }
 
   const arr: any[] = data.data;
 
